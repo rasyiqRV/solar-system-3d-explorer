@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penjelajah Tata Surya 3D - Simulasi Penerbangan Antariksa dan Edukasi Astronomi</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Kontainer Render WebGL Tiga Dimensi -->
+    <div id="canvas-container"></div>
+
+    <!-- Reticle Bidik Tengah Layar -->
+    <div class="crosshair">
+        <div class="crosshair-circle"></div>
+    </div>
+
+    <!-- Lapisan Tampilan Head-Up Display (HUD) -->
+    <div id="hud-overlay">
+        <!-- Bilah Navigasi Atas -->
+        <header class="top-nav">
+            <div class="nav-brand">
+                <span class="nav-title">AstroVoyager 3D</span>
+                <span class="nav-subtitle">Wahana Penjelajah Tata Surya</span>
+            </div>
+
+            <div class="nav-controls">
+                <div class="target-select-wrapper">
+                    <label for="target-select">Kunci Target:</label>
+                    <select id="target-select" class="target-select">
+                        <option value="sun">Matahari</option>
+                        <option value="mercury">Merkurius</option>
+                        <option value="venus">Venus</option>
+                        <option value="earth" selected>Bumi</option>
+                        <option value="moon">Bulan</option>
+                        <option value="mars">Mars</option>
+                        <option value="asteroidBelt">Sabuk Asteroid</option>
+                        <option value="jupiter">Yupiter</option>
+                        <option value="saturn">Saturnus</option>
+                        <option value="uranus">Uranus</option>
+                        <option value="neptune">Neptunus</option>
+                    </select>
+                </div>
+
+                <button id="btn-open-missions" class="nav-btn">Log Misi</button>
+                <button id="btn-open-quiz" class="nav-btn">Kuis Sains</button>
+                <button id="btn-open-controls" class="nav-btn">Kontrol [?]</button>
+                <button id="orbit-toggle-btn" class="nav-btn">Orbit: Tampil</button>
+                <button id="audio-toggle-btn" class="nav-btn">Audio: Aktif</button>
+            </div>
+        </header>
+
+        <!-- Peringatan Bahaya Radiasi Matahari -->
+        <div id="radiation-alert" class="alert-banner hidden">
+            PERINGATAN: RADIASI TERMAL MATAHARI KRITIS! JAUHI KORONA BINTANG!
+        </div>
+
+        <!-- Banner Interaktif Pemindaian Sains Objek -->
+        <div id="scan-banner" class="scan-banner hidden">
+            <div class="scan-banner-text">
+                Objek terdeteksi dalam jangkauan sensor: <span id="scan-target-name" class="scan-target-name">-</span>
+            </div>
+            <button id="scan-action-btn" class="btn-scan-action">Pindai Sains [F]</button>
+        </div>
+
+        <!-- Panel Telemetri dan Navigasi Bawah -->
+        <footer class="bottom-hud">
+            <!-- Panel Telemetri Penerbangan Kiri -->
+            <div class="telemetry-panel">
+                <div class="panel-title">Telemetri Wahana</div>
+                <div class="gauge-row">
+                    <div class="gauge-label">
+                        <span>Kecepatan</span>
+                        <span id="hud-speed" class="gauge-val">0 km/detik</span>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">
+                        <span>Throttle Mesin Plasma</span>
+                    </div>
+                    <div class="gauge-bar-track">
+                        <div id="hud-throttle-bar" class="gauge-bar-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">
+                        <span>Kapasitor Hiperdrive</span>
+                    </div>
+                    <div class="gauge-bar-track">
+                        <div id="hud-warp-bar" class="gauge-bar-fill warp-energy" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Sensor Radar dan Target Kanan -->
+            <div class="navigation-panel">
+                <div class="panel-title">Sensor Radar & Navigasi</div>
+                <canvas id="radar-canvas" width="140" height="140"></canvas>
+                <div class="target-info">
+                    <div class="target-info-row">
+                        <span class="text-muted">Target:</span>
+                        <span id="hud-target-name" class="gauge-val">Bumi</span>
+                    </div>
+                    <div class="target-info-row">
+                        <span class="text-muted">Jarak:</span>
+                        <span id="hud-target-distance" class="gauge-val">- km</span>
+                    </div>
+                </div>
+                <button id="warp-btn" class="btn-warp-action">Lompat Hiperdrive [H]</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast Notifikasi Pesan Sistem -->
+    <div id="notification-toast" class="notification-toast hidden"></div>
+
+    <!-- Modal 1: Pemindai Data Ilmiah Astronomi -->
+    <div id="scan-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h2 id="scan-modal-title">Nama Objek</h2>
+                    <div id="scan-modal-type" class="modal-subtitle">Tipe Objek</div>
+                </div>
+                <button class="close-modal-btn">X</button>
+            </div>
+            <p id="scan-modal-desc" class="modal-desc"></p>
+            <div id="scan-modal-specs" class="specs-grid"></div>
+            <div class="facts-section">
+                <h4>Fakta Penting Astronomi</h4>
+                <ul id="scan-modal-facts" class="facts-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Log Misi Penjelajahan Terpandu -->
+    <div id="mission-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h2>Log Misi Penjelajahan Antariksa</h2>
+                    <div id="mission-counter" class="mission-counter">0 / 11 Selesai</div>
+                </div>
+                <button class="close-modal-btn">X</button>
+            </div>
+            <div id="mission-list-container" class="mission-list"></div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Kuis Interaktif Pengetahuan Astronomi -->
+    <div id="quiz-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h2>Evaluasi Pengetahuan Astronomi</h2>
+                    <div id="quiz-progress" class="modal-subtitle">Pertanyaan 1 dari 8</div>
+                </div>
+                <button class="close-modal-btn">X</button>
+            </div>
+            <div id="quiz-question-container"></div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Panduan Kontrol Penerbangan -->
+    <div id="controls-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h2>Panduan Kendali Wahana Antariksa</h2>
+                    <div class="modal-subtitle">Petunjuk manuver dan navigasi sistem</div>
+                </div>
+                <button class="close-modal-btn">X</button>
+            </div>
+            <table class="controls-table">
+                <thead>
+                    <tr>
+                        <th>Fungsi</th>
+                        <th>Tombol Keyboard</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Akselerasi / Tambah Throttle</td>
+                        <td><span class="key-badge">Space</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pengereman / Turunkan Throttle</td>
+                        <td><span class="key-badge">Ctrl</span> atau <span class="key-badge">X</span></td>
+                    </tr>
+                    <tr>
+                        <td>Dorongan Pendorong Cepat (Boost)</td>
+                        <td><span class="key-badge">Shift</span></td>
+                    </tr>
+                    <tr>
+                        <td>Angguk Bawah / Pitch Down</td>
+                        <td><span class="key-badge">W</span> atau <span class="key-badge">Panah Atas</span></td>
+                    </tr>
+                    <tr>
+                        <td>Angguk Atas / Pitch Up</td>
+                        <td><span class="key-badge">S</span> atau <span class="key-badge">Panah Bawah</span></td>
+                    </tr>
+                    <tr>
+                        <td>Belok Kiri / Yaw Kiri</td>
+                        <td><span class="key-badge">A</span> atau <span class="key-badge">Panah Kiri</span></td>
+                    </tr>
+                    <tr>
+                        <td>Belok Kanan / Yaw Kanan</td>
+                        <td><span class="key-badge">D</span> atau <span class="key-badge">Panah Kanan</span></td>
+                    </tr>
+                    <tr>
+                        <td>Guling Kiri / Roll Kiri</td>
+                        <td><span class="key-badge">Q</span></td>
+                    </tr>
+                    <tr>
+                        <td>Guling Kanan / Roll Kanan</td>
+                        <td><span class="key-badge">E</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ganti Sudut Pandang Kamera</td>
+                        <td><span class="key-badge">C</span> (Orang Ketiga, Kokpit, Sinematik)</td>
+                    </tr>
+                    <tr>
+                        <td>Pindai Objek Terdekat</td>
+                        <td><span class="key-badge">F</span></td>
+                    </tr>
+                    <tr>
+                        <td>Lompatan Hiperdrive ke Target Terkunci</td>
+                        <td><span class="key-badge">H</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ganti Kunci Target Objek Langit</td>
+                        <td><span class="key-badge">Tab</span></td>
+                    </tr>
+                    <tr>
+                        <td>Buka Log Misi Penjelajahan</td>
+                        <td><span class="key-badge">M</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tutup Jendela Modal</td>
+                        <td><span class="key-badge">Esc</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Dependensi Pustaka Three.js (r128) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Modul Internal Game -->
+    <script src="js/celestialData.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/textures.js"></script>
+    <script src="js/spaceship.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
