@@ -1,12 +1,132 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" prefix="og: https://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penjelajah Tata Surya 3D - Simulasi Penerbangan Antariksa dan Edukasi Astronomi</title>
+
+    <!-- SEO Meta Primer -->
+    <title>AstroVoyager 3D - Simulasi Tata Surya dan Game Pesawat Antariksa Edukatif</title>
+    <meta name="title" content="AstroVoyager 3D - Simulasi Tata Surya dan Game Pesawat Antariksa Edukatif">
+    <meta name="description" content="Jelajahi keajaiban Tata Surya dengan AstroVoyager 3D. Game simulasi pesawat antariksa interaktif tiga dimensi berbasis WebGL Three.js dengan ensiklopedia astronomi lengkap, misi edukatif, dan kuis sains.">
+    <meta name="keywords" content="tata surya 3d, game antariksa, simulasi luar angkasa, edukasi astronomi, three.js solar system, planet simulator, game pesawat luar angkasa, fisika antariksa, matahari, bumi, mars, jupiter, saturnus, sains astronomi">
+    <meta name="author" content="rasyiqRV">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#030712">
+    <link rel="canonical" href="https://astrovoyager-3d.vercel.app/">
+
+    <!-- Open Graph / Facebook / WhatsApp / Discord / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://astrovoyager-3d.vercel.app/">
+    <meta property="og:title" content="AstroVoyager 3D - Simulasi Tata Surya dan Game Pesawat Antariksa">
+    <meta property="og:description" content="Jelajahi Tata Surya secara interaktif dalam grafis 3D. Terbangkan pesawat antariksa, pelajari fakta sains planet, selesaikan misi penjelajahan, dan uji wawasan astronomimu.">
+    <meta property="og:image" content="https://astrovoyager-3d.vercel.app/assets/og-preview.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="AstroVoyager 3D Solar System Simulation Banner">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:site_name" content="AstroVoyager 3D">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://astrovoyager-3d.vercel.app/">
+    <meta name="twitter:title" content="AstroVoyager 3D - Penjelajah Tata Surya 3D Interaktif">
+    <meta name="twitter:description" content="Game simulasi antariksa Three.js dengan ensiklopedia planet, lompatan hiperdrive, dan kuis sains astronomi.">
+    <meta name="twitter:image" content="https://astrovoyager-3d.vercel.app/assets/og-preview.svg">
+    <meta name="twitter:creator" content="@rasyiqRV">
+
+    <!-- Favicon & PWA Manifest -->
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="apple-touch-icon" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Skema Data Terstruktur JSON-LD (Schema.org) untuk Search Engine Indexing -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://astrovoyager-3d.vercel.app/#webapp",
+          "name": "AstroVoyager 3D",
+          "url": "https://astrovoyager-3d.vercel.app/",
+          "description": "Aplikasi game simulasi pesawat antariksa 3D interaktif yang menjelajah Tata Surya kita dengan fitur edukasi astronomi mendalam.",
+          "applicationCategory": "EducationalApplication, GameApplication",
+          "operatingSystem": "All modern browsers (Chrome, Edge, Firefox, Safari)",
+          "browserRequirements": "Requires WebGL support",
+          "inLanguage": "id",
+          "isAccessibleForFree": true,
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "rasyiqRV"
+          }
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Pengetahuan Astronomi Tata Surya",
+          "educationalLevel": "Beginner to Advanced"
+        }
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Konten Semantik untuk Aksesibilitas dan Mesin Pencari (Search Engine Crawlers) -->
+    <main class="sr-only">
+        <h1>AstroVoyager 3D: Simulasi Penerbangan Luar Angkasa dan Edukasi Tata Surya</h1>
+        <p>AstroVoyager 3D adalah simulasi antariksa berbasis web menggunakan Three.js dan WebGL yang dirancang untuk pembelajaran astronomi interaktif. Pengguna mengendalikan wahana penjelajah antariksa bermanuver di sekeliling Matahari, planet-planet kebumian, raksasa gas, raksasa es, dan sabuk asteroid.</p>
+        
+        <section>
+            <h2>Objek Langit dalam Simulasi Tata Surya</h2>
+            <article>
+                <h3>Matahari</h3>
+                <p>Bintang induk deret utama tipe G2V di pusat tata surya yang menampung 99,86 persen massa tata surya dan memancarkan energi lewat fusi nuklir hidrogen menjadi helium.</p>
+            </article>
+            <article>
+                <h3>Merkurius</h3>
+                <p>Planet terdekat dari Matahari dengan variasi temperatur siang 430 derajat Celsius dan malam minus 180 derajat Celsius.</p>
+            </article>
+            <article>
+                <h3>Venus</h3>
+                <p>Planet terpanas di Tata Surya akibat efek rumah kaca ekstrem dari atmosfer karbondioksida pekat bertekanan 92 bar.</p>
+            </article>
+            <article>
+                <h3>Bumi dan Bulan</h3>
+                <p>Dunia berpenghuni dengan hidrosfer air cair dan atmosfer kaya oksigen-nitrogen, didampingi satelit alami Bulan dengan fenomena penguncian pasang surut.</p>
+            </article>
+            <article>
+                <h3>Mars</h3>
+                <p>Planet Merah berkandungan besi oksida melimpah, rumah bagi gunung tertinggi Olympus Mons dan lembah ngarai Valles Marineris.</p>
+            </article>
+            <article>
+                <h3>Sabuk Asteroid</h3>
+                <p>Zona puing batuan dan logam sisa pembentukan planet antara orbit Mars dan Yupiter, dipimpin planet katai Ceres.</p>
+            </article>
+            <article>
+                <h3>Yupiter</h3>
+                <p>Raksasa gas terbesar dengan badai antisiklon Bintik Merah Raksasa dan medan magnet dahsyat.</p>
+            </article>
+            <article>
+                <h3>Saturnus</h3>
+                <p>Planet tercantik dengan sistem cincin es air murni membentang 282.000 km dan satelit bertanah Titan.</p>
+            </article>
+            <article>
+                <h3>Uranus</h3>
+                <p>Raksasa es berwarna sian dengan kemiringan rotasi unik 97,77 derajat dan atmosfer bersuhu minus 224 derajat Celsius.</p>
+            </article>
+            <article>
+                <h3>Neptunus</h3>
+                <p>Planet terjauh dari Matahari dengan badai angin supersonik melampaui 2.100 km per jam.</p>
+            </article>
+        </section>
+    </main>
+
     <!-- Kontainer Render WebGL Tiga Dimensi -->
     <div id="canvas-container"></div>
 
@@ -27,7 +147,7 @@
             <div class="nav-controls">
                 <div class="target-select-wrapper">
                     <label for="target-select">Kunci Target:</label>
-                    <select id="target-select" class="target-select">
+                    <select id="target-select" class="target-select" aria-label="Pilih Target Planet">
                         <option value="sun">Matahari</option>
                         <option value="mercury">Merkurius</option>
                         <option value="venus">Venus</option>
@@ -42,21 +162,21 @@
                     </select>
                 </div>
 
-                <button id="btn-open-missions" class="nav-btn">Log Misi</button>
-                <button id="btn-open-quiz" class="nav-btn">Kuis Sains</button>
-                <button id="btn-open-controls" class="nav-btn">Kontrol [?]</button>
-                <button id="orbit-toggle-btn" class="nav-btn">Orbit: Tampil</button>
-                <button id="audio-toggle-btn" class="nav-btn">Audio: Aktif</button>
+                <button id="btn-open-missions" class="nav-btn" aria-label="Buka Log Misi">Log Misi</button>
+                <button id="btn-open-quiz" class="nav-btn" aria-label="Buka Kuis Sains">Kuis Sains</button>
+                <button id="btn-open-controls" class="nav-btn" aria-label="Panduan Kontrol">Kontrol [?]</button>
+                <button id="orbit-toggle-btn" class="nav-btn" aria-label="Toggle Garis Orbit">Orbit: Tampil</button>
+                <button id="audio-toggle-btn" class="nav-btn" aria-label="Toggle Audio">Audio: Aktif</button>
             </div>
         </header>
 
         <!-- Peringatan Bahaya Radiasi Matahari -->
-        <div id="radiation-alert" class="alert-banner hidden">
+        <div id="radiation-alert" class="alert-banner hidden" role="alert">
             PERINGATAN: RADIASI TERMAL MATAHARI KRITIS! JAUHI KORONA BINTANG!
         </div>
 
         <!-- Banner Interaktif Pemindaian Sains Objek -->
-        <div id="scan-banner" class="scan-banner hidden">
+        <div id="scan-banner" class="scan-banner hidden" role="region" aria-live="polite">
             <div class="scan-banner-text">
                 Objek terdeteksi dalam jangkauan sensor: <span id="scan-target-name" class="scan-target-name">-</span>
             </div>
@@ -94,8 +214,8 @@
 
             <!-- Panel Sensor Radar dan Target Kanan -->
             <div class="navigation-panel">
-                <div class="panel-title">Sensor Radar & Navigasi</div>
-                <canvas id="radar-canvas" width="140" height="140"></canvas>
+                <div class="panel-title">Sensor Radar &amp; Navigasi</div>
+                <canvas id="radar-canvas" width="140" height="140" aria-label="Radar Posisi Planet"></canvas>
                 <div class="target-info">
                     <div class="target-info-row">
                         <span class="text-muted">Target:</span>
@@ -112,17 +232,17 @@
     </div>
 
     <!-- Toast Notifikasi Pesan Sistem -->
-    <div id="notification-toast" class="notification-toast hidden"></div>
+    <div id="notification-toast" class="notification-toast hidden" role="status"></div>
 
     <!-- Modal 1: Pemindai Data Ilmiah Astronomi -->
-    <div id="scan-modal" class="modal-overlay hidden">
+    <div id="scan-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title-group">
                     <h2 id="scan-modal-title">Nama Objek</h2>
                     <div id="scan-modal-type" class="modal-subtitle">Tipe Objek</div>
                 </div>
-                <button class="close-modal-btn">X</button>
+                <button class="close-modal-btn" aria-label="Tutup Jendela">X</button>
             </div>
             <p id="scan-modal-desc" class="modal-desc"></p>
             <div id="scan-modal-specs" class="specs-grid"></div>
@@ -134,42 +254,42 @@
     </div>
 
     <!-- Modal 2: Log Misi Penjelajahan Terpandu -->
-    <div id="mission-modal" class="modal-overlay hidden">
+    <div id="mission-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title-group">
                     <h2>Log Misi Penjelajahan Antariksa</h2>
                     <div id="mission-counter" class="mission-counter">0 / 11 Selesai</div>
                 </div>
-                <button class="close-modal-btn">X</button>
+                <button class="close-modal-btn" aria-label="Tutup Jendela">X</button>
             </div>
             <div id="mission-list-container" class="mission-list"></div>
         </div>
     </div>
 
     <!-- Modal 3: Kuis Interaktif Pengetahuan Astronomi -->
-    <div id="quiz-modal" class="modal-overlay hidden">
+    <div id="quiz-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title-group">
                     <h2>Evaluasi Pengetahuan Astronomi</h2>
                     <div id="quiz-progress" class="modal-subtitle">Pertanyaan 1 dari 8</div>
                 </div>
-                <button class="close-modal-btn">X</button>
+                <button class="close-modal-btn" aria-label="Tutup Jendela">X</button>
             </div>
             <div id="quiz-question-container"></div>
         </div>
     </div>
 
     <!-- Modal 4: Panduan Kontrol Penerbangan -->
-    <div id="controls-modal" class="modal-overlay hidden">
+    <div id="controls-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title-group">
                     <h2>Panduan Kendali Wahana Antariksa</h2>
                     <div class="modal-subtitle">Petunjuk manuver dan navigasi sistem</div>
                 </div>
-                <button class="close-modal-btn">X</button>
+                <button class="close-modal-btn" aria-label="Tutup Jendela">X</button>
             </div>
             <table class="controls-table">
                 <thead>

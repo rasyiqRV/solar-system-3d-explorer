@@ -43,25 +43,29 @@ class SolarSystemGame {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        this.renderer.toneMappingExposure = 1.1;
+        this.renderer.toneMappingExposure = 1.45;
         this.container.appendChild(this.renderer.domElement);
 
         // Scene
         this.scene = new THREE.Scene();
-        this.scene.fog = new THREE.FogExp2(0x020617, 0.00004);
+        this.scene.fog = new THREE.FogExp2(0x020617, 0.000025);
 
         // Camera
         this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.5, 35000);
         this.camera.position.set(0, 60, 520);
 
-        // Cahaya Matahari (PointLight di pusat tata surya)
-        this.sunLight = new THREE.PointLight(0xffffff, 2.5, 9000, 0.15);
+        // Cahaya Matahari (PointLight di pusat tata surya) - Ditingkatkan intensitasnya
+        this.sunLight = new THREE.PointLight(0xfff8e7, 3.8, 12000, 0.12);
         this.sunLight.position.set(0, 0, 0);
         this.scene.add(this.sunLight);
 
-        // Cahaya redup kosmik (Ambient Light)
-        this.ambientLight = new THREE.AmbientLight(0x1e293b, 0.25);
+        // Cahaya Ambien Kosmik - Ditingkatkan agar sisi gelap planet dan ruang angkasa lebih terang
+        this.ambientLight = new THREE.AmbientLight(0x475569, 0.55);
         this.scene.add(this.ambientLight);
+
+        // Cahaya Hemisfer untuk pencahayaan ruang angkasa yang lebih seimbang
+        this.hemiLight = new THREE.HemisphereLight(0x94a3b8, 0x1e293b, 0.4);
+        this.scene.add(this.hemiLight);
     }
 
     initStarfield() {
@@ -306,6 +310,15 @@ class SolarSystemGame {
 
     initSpaceship() {
         this.spaceship = new Spaceship(this.scene);
+
+        // Lampu Sorot Eksplorasi Pesawat (Menerangi objek yang didekati pemain)
+        this.shipSpotLight = new THREE.SpotLight(0xe2e8f0, 2.5, 450, Math.PI / 4.5, 0.45, 0.8);
+        this.shipSpotLight.position.set(0, 1.0, -1.0);
+        const targetObj = new THREE.Object3D();
+        targetObj.position.set(0, 0, -50);
+        this.spaceship.group.add(targetObj);
+        this.shipSpotLight.target = targetObj;
+        this.spaceship.group.add(this.shipSpotLight);
     }
 
     initEventListeners() {
